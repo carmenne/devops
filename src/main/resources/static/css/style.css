@@ -6,3 +6,17 @@ body {
     padding: 40px 15px;
     text-align: center;
 }
+
+p.starter-template {
+    padding: 60px 15px;
+    text-align: center;
+}
+
+h2.starter-template{
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.img-carousel {
+    width: 100%;
+}
