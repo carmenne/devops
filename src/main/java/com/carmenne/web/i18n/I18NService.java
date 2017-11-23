@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 
 @Service
-public class I18nService {
+public class I18NService {
 
 
     /**
      * The application logger
      */
     private static final Logger LOG
-            = LoggerFactory.getLogger(I18nService.class);
+            = LoggerFactory.getLogger(I18NService.class);
 
 
     @Autowired

@@ -15,13 +15,21 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#" th:text="#{navbar.home.text}"></a></li>
+                    <li class="active"><a href="/" th:text="#{navbar.home.text}"></a></li>
                     <li><a href="/about" th:text="#{navbar.home.about}"></a></li>
                     <li><a href="/contact" th:text="#{navbar.home.contact}"></a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/login}" th:text="#{navbar.home.login}"></a></li>
+                    <li th:if="${#authorization?.expression('!isAuthenticated()')}">
+                        <a th:href="@{/login}" th:text="#{navbar.login.text}" />
+                    </li>
+                    <li th:if="${#authorization?.expression('isAuthenticated()')}">
+                        <form id="f" th:action="@{/logout}" method="post" role="form" class="navbar-form">
+                            <button type="submit" th:text="#{navbar.logout.text}" class="btn btn-primary"/>
+
+                        </form>
+                    </li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

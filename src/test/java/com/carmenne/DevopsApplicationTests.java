@@ -1,29 +1,30 @@
 package com.carmenne;
 
-import com.carmenne.web.i18n.I18nService;
+import com.carmenne.web.i18n.I18NService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = DevopsApplication.class)
+@WebAppConfiguration
 public class DevopsApplicationTests {
 
     @Autowired
-    private I18nService i18nService;
+    private I18NService i18NService;
 
     @Test
-    public void testMessageByLocaleServices() throws Exception{
+    public void testMessageByLocaleService() throws Exception {
         String expectedResult = "Bootstrap starter template";
         String messageId = "index.main.callout";
-        String actual = i18nService.getMessage(messageId);
-
-        assertEquals("The actual and expected messages don't match",
-                expectedResult, actual);
+        String actual = i18NService.getMessage(messageId);
+        Assert.assertEquals("The actual and expected Strings don't match", expectedResult, actual);
     }
 
 }
