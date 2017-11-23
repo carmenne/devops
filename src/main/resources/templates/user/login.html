@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/header :: common-header"></head>
+
+<div th:replace="common/navbar :: common-navbar"></div>
+
+<body>
+
+    <div class="container">
+
+        <div class="starter-template">
+            <h1 th:text="#{index.main.callout}"></h1>
+            <p>First paragraph</p>
+        </div>
+
+    </div><!-- /.container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<div th:replace="common/header :: before-body-script"></div>
+
+</body>
+</html>
