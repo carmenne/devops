@@ -8,6 +8,8 @@ import com.carmenne.backend.persistence.repositories.RoleRepository;
 import com.carmenne.backend.persistence.repositories.UserRepository;
 import com.carmenne.enums.PlansEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +28,15 @@ public class UserService {
     @Autowired
     private PlanRepository planRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User createUser(User user,
                            PlansEnum plansEnum,
                            Set<UserRole> userRoles) {
+
+        String encPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encPassword);
 
         Plan plan = new Plan(plansEnum);
 
