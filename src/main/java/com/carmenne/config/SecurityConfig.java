@@ -1,5 +1,6 @@
 package com.carmenne.config;
 
+import com.carmenne.backend.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     /** Public URLs. */
     private static final String[] PUBLIC_MATCHERS = {
@@ -50,6 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .failureUrl("/login?error").permitAll()
                 .and()
                 .logout().permitAll();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder
+                                        auth) throws Exception{
+        auth.
+                userDetailsService(userDetailsService);
     }
 
 }

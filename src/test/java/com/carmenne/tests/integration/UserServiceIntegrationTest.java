@@ -7,7 +7,7 @@ import com.carmenne.backend.persistence.domain.backend.UserRole;
 import com.carmenne.backend.service.UserService;
 import com.carmenne.enums.PlansEnum;
 import com.carmenne.enums.RolesEnum;
-import com.carmenne.utils.UsersUtils;
+import com.carmenne.utils.UserUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class UserServiceIntegrationTest {
 
         Set<UserRole> userRoles = new HashSet<>();
 
-        User basicUser = UsersUtils.createUser();
+        User basicUser = UserUtils.createBasicUser();
 
         userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
 

@@ -2,13 +2,13 @@ package com.carmenne.utils;
 
 import com.carmenne.backend.persistence.domain.backend.User;
 
-public class UsersUtils {
+public class UserUtils {
 
-    private UsersUtils() {
+    private UserUtils() {
         throw new AssertionError("Non instantiable");
     }
 
-    public static User createUser() {
+    public static User createBasicUser() {
         User user = new User();
 
         user.setUsername("basicUser");

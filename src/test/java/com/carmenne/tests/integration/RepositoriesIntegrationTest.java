@@ -10,7 +10,7 @@ import com.carmenne.backend.persistence.repositories.RoleRepository;
 import com.carmenne.backend.persistence.repositories.UserRepository;
 import com.carmenne.enums.PlansEnum;
 import com.carmenne.enums.RolesEnum;
-import com.carmenne.utils.UsersUtils;
+import com.carmenne.utils.UserUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,27 +66,7 @@ public class RepositoriesIntegrationTest {
     @Transactional
     public void test_createUser() throws Exception {
 
-        Plan basicPlan = createBasicPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
-
-        User basicUser = UsersUtils.createUser();
-        basicUser.setPlan(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-
-        Set<UserRole> userRoles = new HashSet<>();
-
-        UserRole userRole = new UserRole();
-        userRole.setRole(basicRole);
-        userRole.setUser(basicUser);
-
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-
-        for (UserRole ur : userRoles) {
-            roleRepository.save(ur.getRole());
-        }
+        User basicUser = createNewUser();
 
         basicUser = userRepository.save(basicUser);
         User newlyCreatedUser = userRepository.findOne(basicUser.getId());
@@ -102,9 +82,12 @@ public class RepositoriesIntegrationTest {
             Assert.notNull(ur.getRole());
             Assert.notNull(ur.getRole().getId());
         }
+    }
 
-
-
+    @Test
+    public void testDeleteUser() throws Exception{
+        User basicUser = createNewUser();
+        userRepository.delete(basicUser.getId());
     }
 
     //---------------> Private methods
@@ -116,6 +99,27 @@ public class RepositoriesIntegrationTest {
 
     private Role createRole(RolesEnum rolesEnum) {
         return new Role(rolesEnum);
+    }
+
+    private User createNewUser() {
+
+        Plan basicPlan = createBasicPlan(PlansEnum.BASIC);
+        planRepository.save(basicPlan);
+
+        User basicUser = UserUtils.createBasicUser();
+        basicUser.setPlan(basicPlan);
+
+        Role basicRole = createRole(RolesEnum.BASIC);
+        roleRepository.save(basicRole);
+
+        Set<UserRole> userRoles = new HashSet<>();
+        UserRole userRole = new UserRole(basicUser, basicRole);
+        userRoles.add(userRole);
+
+        basicUser.getUserRoles().addAll(userRoles);
+        userRepository.save(basicUser);
+
+        return basicUser;
     }
 
 }
