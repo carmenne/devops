@@ -1,6 +1,7 @@
 package com.carmenne.config;
 
 import com.carmenne.backend.service.EmailService;
+import com.carmenne.backend.service.SmtpEmailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
