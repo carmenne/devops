@@ -8,7 +8,9 @@ import com.carmenne.backend.service.UserService;
 import com.carmenne.enums.PlansEnum;
 import com.carmenne.enums.RolesEnum;
 import com.carmenne.utils.UserUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -26,12 +28,16 @@ public class UserServiceIntegrationTest {
     @Autowired
     private UserService userService;
 
+    @Rule
+    public TestName testName = new TestName();
+
     @Test
     public void testCreateNewUser() throws Exception {
 
         Set<UserRole> userRoles = new HashSet<>();
 
-        User basicUser = UserUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser(testName.getMethodName(),
+                testName.getMethodName() + "@com");
 
         userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
 

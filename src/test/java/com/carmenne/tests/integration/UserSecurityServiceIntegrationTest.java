@@ -5,7 +5,9 @@ import com.carmenne.backend.persistence.domain.backend.User;
 import com.carmenne.backend.service.UserSecurityService;
 import com.carmenne.utils.UserUtils;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -23,6 +25,9 @@ public class UserSecurityServiceIntegrationTest {
     @Autowired
     private UserDetailsService userSecurityService;
 
+    @Rule
+    public TestName testName = new TestName();
+
     @Test
     public void testFindByUserName_positive() {
 
@@ -34,7 +39,8 @@ public class UserSecurityServiceIntegrationTest {
     @Test(expected = UsernameNotFoundException.class)
     public void testFindByUserName_negative() {
 
-        User user = UserUtils.createBasicUser();
+        User user = UserUtils.createBasicUser(testName.getMethodName(),
+                testName.getMethodName() + "@com");
         UserDetails foundUser = userSecurityService.loadUserByUsername("username");
         Assert.assertNotNull(foundUser);
 

@@ -12,7 +12,9 @@ import com.carmenne.enums.PlansEnum;
 import com.carmenne.enums.RolesEnum;
 import com.carmenne.utils.UserUtils;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -35,6 +37,9 @@ public class RepositoriesIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Rule
+    public TestName testName = new TestName();
 
     @Before
     public void init() {
@@ -106,7 +111,8 @@ public class RepositoriesIntegrationTest {
         Plan basicPlan = createBasicPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = UserUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser(testName.getMethodName(),
+                testName.getMethodName() + "@com");
         basicUser.setPlan(basicPlan);
 
         Role basicRole = createRole(RolesEnum.BASIC);
