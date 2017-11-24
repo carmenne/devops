@@ -1,5 +1,7 @@
 package com.carmenne.backend.persistence.domain.backend;
 
+import com.carmenne.enums.RolesEnum;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,6 +21,15 @@ public class Role implements Serializable {
     private Set<UserRole> userRoles = new HashSet<>();
 
     public Role() {}
+
+    /**
+     * Full constructor
+     * @param rolesEnum
+     */
+    public Role(RolesEnum rolesEnum) {
+        this.id = rolesEnum.getId();
+        this.name = rolesEnum.getName();
+    }
 
     public int getId() {
         return id;

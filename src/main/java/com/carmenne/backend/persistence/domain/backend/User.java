@@ -145,8 +145,8 @@ public class User implements Serializable {
         return plan;
     }
 
-    public void setPlan(Plan planId) {
-        this.plan = planId;
+    public void setPlan(Plan plan) {
+        this.plan = plan;
     }
 
     public Set<UserRole> getUserRoles() {
