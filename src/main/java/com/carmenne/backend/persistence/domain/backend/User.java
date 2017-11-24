@@ -1,7 +1,6 @@
 package com.carmenne.backend.persistence.domain.backend;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +15,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private String username;
     private String password;
     private String email;
@@ -37,20 +36,20 @@ public class User implements Serializable {
     private String profile_image_url;
     private String stripe_customer_id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="plan_id")
-    private Plan planId;
+    private Plan plan;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<UserRole> userRoles = new HashSet<>();
 
     public User() {}
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -142,12 +141,12 @@ public class User implements Serializable {
         this.stripe_customer_id = stripe_customer_id;
     }
 
-    public Plan getPlanId() {
-        return planId;
+    public Plan getPlan() {
+        return plan;
     }
 
-    public void setPlanId(Plan planId) {
-        this.planId = planId;
+    public void setPlan(Plan planId) {
+        this.plan = planId;
     }
 
     public Set<UserRole> getUserRoles() {
