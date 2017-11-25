@@ -27,16 +27,7 @@ import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DevopsApplication.class)
-public class RepositoriesIntegrationTest {
-
-    @Autowired
-    private PlanRepository planRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+public class UserIntegrationTest extends AbstractIntegrationTest {
 
     @Rule
     public TestName testName = new TestName();
@@ -71,7 +62,7 @@ public class RepositoriesIntegrationTest {
     @Transactional
     public void test_createUser() throws Exception {
 
-        User basicUser = createNewUser();
+        User basicUser = createNewUser(testName);
 
         basicUser = userRepository.save(basicUser);
         User newlyCreatedUser = userRepository.findOne(basicUser.getId());
@@ -91,41 +82,7 @@ public class RepositoriesIntegrationTest {
 
     @Test
     public void testDeleteUser() throws Exception{
-        User basicUser = createNewUser();
+        User basicUser = createNewUser(testName);
         userRepository.delete(basicUser.getId());
     }
-
-    //---------------> Private methods
-
-    private Plan createBasicPlan(PlansEnum plansEnum) {
-        return new Plan(plansEnum);
-    }
-
-
-    private Role createRole(RolesEnum rolesEnum) {
-        return new Role(rolesEnum);
-    }
-
-    private User createNewUser() {
-
-        Plan basicPlan = createBasicPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
-
-        User basicUser = UserUtils.createBasicUser(testName.getMethodName(),
-                testName.getMethodName() + "@com");
-        basicUser.setPlan(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-        roleRepository.save(basicRole);
-
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, basicRole);
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-        userRepository.save(basicUser);
-
-        return basicUser;
-    }
-
 }
