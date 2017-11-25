@@ -32,16 +32,15 @@ public class I18NService {
 
         LOG.info("Return i28n text for message {}", messageId);
         Locale locale = LocaleContextHolder.getLocale();
-        return getMessage(locale, messageId);
+        return getMessage(messageId, locale);
     }
 
     /**
      * Return a message for the given message and locale
-     * @param locale The locale
      * @param messageId The key as in the messages file
+     * @param locale The locale
      */
-    private String getMessage(Locale locale, String messageId) {
-
+    public String getMessage(String messageId, Locale locale) {
         return messageSource.getMessage(messageId, null, locale);
     }
 }

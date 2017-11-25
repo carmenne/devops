@@ -1,6 +1,8 @@
 package com.carmenne.utils;
 
 import com.carmenne.backend.persistence.domain.backend.User;
+import com.carmenne.web.controllers.ForgotMyPasswordController;
+import javax.servlet.http.HttpServletRequest;
 
 public class UserUtils {
 
@@ -26,4 +28,19 @@ public class UserUtils {
 
         return user;
     }
+
+  public static String createUrl(HttpServletRequest request, long userId,
+      String token) {
+
+        return request.getScheme() +
+            "://" +
+            request.getServerName() +
+            ":" +
+            request.getServerPort() +
+            request.getContextPath() +
+            ForgotMyPasswordController.CHANGE_PASSOWRD_PATH +
+            "?id=" + userId +
+            "&token=" + token;
+
+  }
 }
