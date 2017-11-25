@@ -11,11 +11,15 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.rules.TestName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public abstract class AbstractServiceIntegrationTest {
 
   @Autowired
   protected UserService userService;
+
+  @Autowired
+  protected PasswordEncoder passwordEncoder;
 
   protected User createUser(TestName testName) {
     Set<UserRole> userRoles = new HashSet<>();

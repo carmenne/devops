@@ -15,20 +15,21 @@ import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Assert;
+import org.junit.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DevopsApplication.class)
 public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
 
+  private static final String NEW_PASSWORD = "secret";
   @Rule
   public TestName testName = new TestName();
 
   @Before
   public void init() {
-    Assert.notNull(planRepository);
-    Assert.notNull(roleRepository);
-    Assert.notNull(userRepository);
+    Assert.assertNotNull(planRepository);
+    Assert.assertNotNull(roleRepository);
+    Assert.assertNotNull(userRepository);
 
   }
 
@@ -37,7 +38,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     Plan basicPlan = createBasicPlan(PlansEnum.BASIC);
     planRepository.save(basicPlan);
     Plan retrievePlan = planRepository.findOne(PlansEnum.BASIC.getId());
-    Assert.notNull(retrievePlan);
+    Assert.assertNotNull(retrievePlan);
   }
 
 
@@ -46,7 +47,7 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     Role basicRole = createRole(RolesEnum.BASIC);
     roleRepository.save(basicRole);
     Role retrieveRole = roleRepository.findOne(RolesEnum.BASIC.getId());
-    Assert.notNull(retrieveRole);
+    Assert.assertNotNull(retrieveRole);
   }
 
 
@@ -58,16 +59,16 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     basicUser = userRepository.save(basicUser);
     User newlyCreatedUser = userRepository.findOne(basicUser.getId());
 
-    Assert.notNull(newlyCreatedUser);
-    Assert.isTrue(newlyCreatedUser.getId() != 0);
-    Assert.notNull(newlyCreatedUser.getPlan());
-    Assert.notNull(newlyCreatedUser.getPlan().getId());
+    Assert.assertNotNull(newlyCreatedUser);
+    Assert.assertTrue(newlyCreatedUser.getId() != 0);
+    Assert.assertNotNull(newlyCreatedUser.getPlan());
+    Assert.assertNotNull(newlyCreatedUser.getPlan().getId());
 
     Set<UserRole> newlyCreatedUserRoles = newlyCreatedUser.getUserRoles();
 
     for (UserRole ur : newlyCreatedUserRoles) {
-      Assert.notNull(ur.getRole());
-      Assert.notNull(ur.getRole().getId());
+      Assert.assertNotNull(ur.getRole());
+      Assert.assertNotNull(ur.getRole().getId());
     }
   }
 
@@ -83,9 +84,32 @@ public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
     User user = createNewUser(testName);
     User userFound = userRepository.findByEmail(user.getEmail());
 
-    Assert.notNull(userFound);
-    Assert.notNull(userFound.getId());
+    Assert.assertNotNull(userFound);
+    Assert.assertNotNull(userFound.getId());
 
+  }
+
+  @Test
+  public void testUpdateUserPassword() throws Exception {
+
+    User user = createNewUser(testName);
+
+    userRepository.updateUserPassword(user.getId(), NEW_PASSWORD);
+
+    User foundUser = userRepository.findOne(user.getId());
+
+    Assert.assertNotNull(foundUser);
+    Assert.assertEquals(NEW_PASSWORD, foundUser.getPassword());
+
+  }
+
+  @Test
+  public void testFindById() {
+    User user = createNewUser(testName);
+    User foundUser = userRepository.findOne(user.getId());
+
+    Assert.assertNotNull(foundUser);
+    Assert.assertEquals(user, foundUser);
   }
 
 }
