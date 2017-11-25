@@ -8,9 +8,16 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     /**
-     * Returns a user based by username
+     * Returns an user based by username
      * @param username
      * @return
      */
     public User findByUsername(String username);
+
+    /**
+     * Returns an user by email
+     * @param email
+     * @return
+     */
+    public User findByEmail(String email);
 }

@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DevopsApplication.class)
-public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest {
+public class PasswordResetTokenRepositoryIntegrationTest extends AbstractIntegrationTest {
 
   @Rule
   public TestName testName = new TestName();
